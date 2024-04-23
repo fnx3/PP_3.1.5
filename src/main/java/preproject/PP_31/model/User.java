@@ -1,6 +1,8 @@
 package preproject.PP_31.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -16,14 +18,20 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "password")
+    private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(name = "user_role",
+    joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id") )
+    private Set<Role> roles = new HashSet<>();
 
     public User() {}
 
-    public User(int age, String name, String email) {
+    public User(int age, String name, String password) {
         this.name = name;
-        this.email = email;
+        this.password = password;
         this.age = age;
     }
 
@@ -51,12 +59,20 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPassword() {
+        return password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
@@ -65,7 +81,7 @@ public class User {
                 "id=" + id +
                 ", age=" + age +
                 ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
+                ", email='" + password + '\'' +
                 '}';
     }
 

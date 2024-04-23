@@ -8,6 +8,7 @@
 <br>
 <form th:method="POST" th:action="@{/edit}" th:object="${user}">
     <input type="hidden" th:field="*{id}" />
+    <input type="hidden" th:field="*{roles}"/>
 
     <label for="age">age </label>
     <input type="text" th:field="*{age}" id="age"/>
@@ -16,11 +17,13 @@
     <input type="text" th:field="*{name}" id="name"/>
 
     <br> <label for="email">email </label>
-    <input type="text" th:field="*{email}" id="email"/>
+    <input type="text" th:field="*{password}" id="email"/>
 
     <br><br> <input type="submit" value="Update!">
 
     <br><br> <a href="/">назад</a>
+    <span style="padding-left: 10px"></span>
+    <a href="/logout">выйти</a>
 </form>
 </body>
 </html>

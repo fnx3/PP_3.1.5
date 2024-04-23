@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>All Users</title>
+    <title>info</title>
 </head>
 <body>
 <table>
@@ -15,7 +15,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="user : ${users}">
+    <tr th:object="${user}">
         <td th:text="${user.getId()}">
         <td th:text="${user.getAge()}">
         <td th:text="${user.getName()}">
@@ -23,8 +23,7 @@
     </tr>
     </tbody>
 </table>
-<a href="/">назад</a>
-<span style="padding-left: 10px"></span>
+<a href="/">назад</a> <span style="padding-left: 10px"></span>
 <a href="/logout">выйти</a>
 </body>
 </html>

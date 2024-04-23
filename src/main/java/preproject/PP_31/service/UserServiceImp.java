@@ -21,7 +21,7 @@ public class UserServiceImp implements UserService{
 
     @Transactional(readOnly = true)
     public User get(Long id) {
-       return userRepository.getReferenceById(id);
+       return userRepository.getById(id);
     }
 
     @Transactional(readOnly = true)
