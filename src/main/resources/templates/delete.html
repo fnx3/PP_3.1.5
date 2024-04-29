@@ -6,12 +6,12 @@
 <body>
 <h2> delete user </h2>
 <br>
-<form th:method="POST" th:action="@{/delete}">
+<form th:method="POST" th:action="@{/admin/delete}">
     <label for="id">Введите id для удаления пользователя</label>
     <input type="number" th:value="${id}" name="id" id="id"/>
     <br><br> <input type="submit" value="Delete!">
     <br><br>
-    <a href="/">назад</a>
+    <a href="/admin">назад</a>
     <span style="padding-left: 10px"></span>
     <a href="/logout">выйти</a>
 </form>

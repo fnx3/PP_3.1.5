@@ -6,7 +6,7 @@
 <body>
 <h3> изменить пользователя </h3>
 <br>
-<form th:method="POST" th:action="@{/edit}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/edit}" th:object="${user}">
     <input type="hidden" th:field="*{id}" />
     <input type="hidden" th:field="*{roles}"/>
 
@@ -21,7 +21,7 @@
 
     <br><br> <input type="submit" value="Update!">
 
-    <br><br> <a href="/">назад</a>
+    <br><br> <a href="/admin">назад</a>
     <span style="padding-left: 10px"></span>
     <a href="/logout">выйти</a>
 </form>

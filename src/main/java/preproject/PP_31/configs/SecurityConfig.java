@@ -27,11 +27,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Конфигурируем авторизацию
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        http.csrf().disable().
-                authorizeRequests()
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("user").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/process")
                 .successHandler(handler)
                 .and()
                 .logout();

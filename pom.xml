@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>pre-project.</groupId>
-	<artifactId>PP_3.1</artifactId>
+	<artifactId>4</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>PP_3.1</name>
 	<description>Change a configuration of my project to Spring Boot</description>
