@@ -1,6 +1,8 @@
 package preproject.PP_31.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,8 @@ import preproject.PP_31.service.UserService;
 
 import java.security.Principal;
 import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -25,9 +29,21 @@ public class AdminController {
         this.userRepository = userRepository;
     }
 
+//    @GetMapping()
+//    public String start() {
+//        return "start";
+//    }
+
     @GetMapping()
-    public String start() {
-        return "start";
+    public String admin(Model model, Principal principal, Authentication authentication) {
+        Set<String> roles = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority).map(auth -> auth.replaceAll("ROLE_", "") )
+                .collect(Collectors.toSet() );
+
+        model.addAttribute("userRoles", String.join(" ", roles) );
+        model.addAttribute("userName", principal.getName() );
+
+        return "newBootstrap";
     }
 
     @GetMapping("/info")
