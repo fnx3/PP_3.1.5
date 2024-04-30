@@ -1,0 +1,17 @@
+.nav-pills {
+    margin-top: 20px;
+    width: 200px; /* увеличиваем ширину на 200 px */
+}
+.tab-content {
+    margin-top: 20px; /* увеличиваем отсуп на 20 px */
+    margin-right: 10px;
+    margin-left: 5px;
+}
+.tab-pane {
+    margin-left: 10px;
+}
+.table-striped {
+    margin-right: 1px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}

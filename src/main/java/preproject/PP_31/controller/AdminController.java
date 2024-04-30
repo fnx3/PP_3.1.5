@@ -29,22 +29,11 @@ public class AdminController {
         this.userRepository = userRepository;
     }
 
-//    @GetMapping()
+    //    @GetMapping()
 //    public String start() {
 //        return "start";
 //    }
 
-    @GetMapping()
-    public String admin(Model model, Principal principal, Authentication authentication) {
-        Set<String> roles = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).map(auth -> auth.replaceAll("ROLE_", "") )
-                .collect(Collectors.toSet() );
-
-        model.addAttribute("userRoles", String.join(" ", roles) );
-        model.addAttribute("userName", principal.getName() );
-
-        return "newBootstrap";
-    }
 
     @GetMapping("/info")
     public String get(Model model, Principal principal) {
@@ -101,6 +90,19 @@ public class AdminController {
         userService.delete(id);
 
         return "redirect:/admin/all";
+    }
+
+    @GetMapping()
+    public String admin(Model model, Principal principal, Authentication authentication) {
+        Set<String> roles = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority).map(auth -> auth.replaceAll("ROLE_", "") )
+                .collect(Collectors.toSet() );
+
+        model.addAttribute("roles", String.join(" ", roles) );
+        model.addAttribute("user", userRepository.findByName(principal.getName() ).get() );
+        model.addAttribute("table", userRepository.findAll() );
+
+        return "newBootstrap";
     }
 
 }

@@ -36,7 +36,7 @@ public class Role implements GrantedAuthority {
     }
 
     public String getName() {
-        return name;
+        return name.replaceAll("ROLE_", "");
     }
 
     @Override
