@@ -3,20 +3,24 @@ package preproject.PP_31.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import preproject.PP_31.model.Role;
 import preproject.PP_31.model.User;
+import preproject.PP_31.repositories.RoleRepository;
 import preproject.PP_31.repositories.UserRepository;
 
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
 public class UserServiceImp implements UserService{
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImp(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository; this.roleRepository = roleRepository;
     }
 
     @Transactional(readOnly = true)
@@ -40,6 +44,11 @@ public class UserServiceImp implements UserService{
 
     public void delete(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Role> listRoles() {
+        return roleRepository.findAll();
     }
 
 }

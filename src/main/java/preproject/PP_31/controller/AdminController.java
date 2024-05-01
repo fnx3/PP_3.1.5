@@ -1,20 +1,14 @@
 package preproject.PP_31.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import preproject.PP_31.model.Role;
 import preproject.PP_31.model.User;
 import preproject.PP_31.repositories.UserRepository;
 import preproject.PP_31.service.UserService;
 
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -59,10 +53,9 @@ public class AdminController {
 
     @PostMapping("/new")
     public String addPost(@ModelAttribute("user") User user) {
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER") ) );
         userService.add(user);
 
-        return "redirect:/admin/all";
+        return "redirect:/admin";
     }
 
     @GetMapping("/edit")
@@ -75,7 +68,8 @@ public class AdminController {
     @PostMapping("/edit")
     public String updateUserPost(@ModelAttribute User user, @RequestParam(value="id", required = false) Long id) {
         userService.update(user, id);
-        return "redirect:/admin/all";
+
+        return "redirect:/admin";
     }
 
     @GetMapping("/delete")
@@ -89,20 +83,19 @@ public class AdminController {
     public String deletePost(Long id) {
         userService.delete(id);
 
-        return "redirect:/admin/all";
+        return "redirect:/admin";
     }
 
     @GetMapping()
-    public String admin(Model model, Principal principal, Authentication authentication) {
-        Set<String> roles = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).map(auth -> auth.replaceAll("ROLE_", "") )
-                .collect(Collectors.toSet() );
+    public String admin(Model model, Principal principal) {
 
-        model.addAttribute("roles", String.join(" ", roles) );
         model.addAttribute("user", userRepository.findByName(principal.getName() ).get() );
-        model.addAttribute("table", userRepository.findAll() );
+        model.addAttribute("table", userRepository.findAll() ); // Все пользователи
+        model.addAttribute("listRoles", userService.listRoles() ); // Все роли
 
-        return "newBootstrap";
+
+
+        return "adminBootstrap";
     }
 
 }

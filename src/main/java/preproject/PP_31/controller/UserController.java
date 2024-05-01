@@ -23,10 +23,9 @@ public class UserController {
 
     @GetMapping()
     public String get(Model model, Principal principal) {
-        model.addAttribute("user", userRepository
-                .findByName(principal.getName() ).get() );
+        model.addAttribute("user", userRepository.findByName(principal.getName() ).get() );
 
-        return "info";
+        return "userBootstrap";
     }
 
 }
