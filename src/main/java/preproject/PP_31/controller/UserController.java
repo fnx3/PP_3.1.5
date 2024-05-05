@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import preproject.PP_31.repositories.UserRepository;
-import preproject.PP_31.service.UserService;
 
 import java.security.Principal;
 
