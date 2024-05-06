@@ -20,7 +20,7 @@ public class AdminRestController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<User> > showAllUsers() {
         return ResponseEntity.ok(userRepository.findAll() );
     }

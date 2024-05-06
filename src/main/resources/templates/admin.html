@@ -12,15 +12,15 @@
     <style>
         .nav-pills {
             margin-top: 20px;
-            width: 200px; /* увеличиваем ширину навбара на 200 px */
+            width: 230px; /* увеличиваем ширину навбара на 200 px */
         }
         .tab-content {
             margin-top: 20px; /* увеличиваем отсуп колонки панели на 20 px */
             margin-right: 10px;
-            margin-left: 5px;
+            margin-left: 10px;
         }
         .tab-pane {
-            margin-left: 10px; /* делаем отступ слева панели */
+            margin-left: -8px; /* делаем отступ слева панели */
 
         }
         .table-striped {
@@ -63,16 +63,7 @@
                     <th>Password</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td ></td>
-                    <td ></td>
-                    <td ></td>
-                    <td ></td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
+                <tbody id="oneUserBody">
                 </tbody>
             </table>
         </div>
@@ -104,27 +95,9 @@
                             <th scope="col">Delete</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr >
-                            <td>
-                            <td>
-                            <td>
-                            <td>
-                            <td>
-                                <div></div>
-                            </td>
-                            <td>
-                                <a type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                   data-bs-target="#editModal"
-                                   th:data-bs-target="${'#editModal'}">Edit</a>
-                            </td>
-                            <td>
-                                <a type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                   data-bs-target="#DELETE"
-                                   th:data-bs-target="${'#DELETE'}">Delete</a>
-                            </td>
+                        <tbody id="allUsersBody">
 
-                            <div class="modal fade" th:id="${'editModal'}"
+                            <div class="modal fade"
                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" modal-dialog-centered>
                                     <div class="modal-content">
@@ -137,13 +110,13 @@
                                         <form>
                                             <div class="modal-body col-md text-center">
                                                 <label for="name1"><b>Name</b></label>
-                                                <input th:name="name" th:type="text" class="form-control" id="name1" required/>
+                                                <input class="form-control" id="name1" required/>
                                                 <br>
                                                 <label for="age1"><b>Age</b></label>
-                                                <input th:name="age" th:type="text" class="form-control" id="age1" required/>
+                                                <input class="form-control" id="age1" required/>
                                                 <br>
                                                 <label for="password1"><b>Password</b></label>
-                                                <input th:name="password" th:type="password" class="form-control" id="password1"/>
+                                                <input class="form-control" id="password1"/>
                                                 <br>
                                                 <label for="roles1"><b>Role</b></label>
                                                 <select multiple class="form-control form-control-sm" id="roles1" name="role" size="2" required>
@@ -165,7 +138,7 @@
                                 </div>
                             </div>
 
-                            <div class="modal fade" th:id="${'DELETE'}"
+                            <div class="modal fade"
                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -217,7 +190,7 @@
                     <div class="col-md bg-white border">
                         <form align="center" class="offset-md-4 col-md-3 mt-4 mb-4">
                             <label for="name"><b>Name</b></label>
-                            <input th:name="name" th:field="*{name}" th:type="text" class="form-control" id="name" required/>
+                            <input class="form-control" id="name" required/>
                             <br>
                             <label for="age"><b>Age</b></label>
                             <input class="form-control" id="age" required/>
@@ -231,7 +204,7 @@
 
                             </select>
                             <br>
-                            <button th:type="submit" class="btn btn-success" value="Add new user">Add new user
+                            <button class="btn btn-success" value="Add new user">Add new user
                             </button>
                         </form>
                     </div>

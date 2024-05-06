@@ -21,7 +21,7 @@ function showUser(user) {
     temp += "<td>" + user.id + "</td>"
     temp += "<td>" + user.name + "</td>"
     temp += "<td>" + user.age + "</td>"
-    temp += "<td>" + user.roles.map(role => role.name) + "</td>"
+    temp += "<td>" + user.roles.map(role => role.name).join(" ") + "</td>"
     temp += "<td>" + user.password + "</td>"
     temp += "</tr>"
 

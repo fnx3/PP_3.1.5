@@ -15,9 +15,9 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
       if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN") ) ) {
-          httpServletResponse.sendRedirect("/api/admin");
+          httpServletResponse.sendRedirect("/admin");
       } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER") ) ) {
-          httpServletResponse.sendRedirect("/api/user");
+          httpServletResponse.sendRedirect("/user");
       }
     }
 
