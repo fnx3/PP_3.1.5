@@ -6,42 +6,48 @@ import org.springframework.web.bind.annotation.*;
 import preproject.PP_31.model.User;
 import preproject.PP_31.repositories.UserRepository;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
-public class AdminRESTController {
+@RequestMapping("/api/admin")
+public class AdminRestController {
 
     UserRepository userRepository;
 
     @Autowired
-    public AdminRESTController(UserRepository userRepository) {
+    public AdminRestController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public ResponseEntity<List<User> > showAllUsers() {
         return ResponseEntity.ok(userRepository.findAll() );
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> showUser(@PathVariable Long id) {
         return ResponseEntity.ok(userRepository.findById(id).get() );
     }
 
-    @PostMapping("/users")
+    @PostMapping
     public ResponseEntity<User> newUser (@RequestBody User user) {
         return ResponseEntity.ok(userRepository.save(user) );
     }
 
-    @PutMapping("/users")
+    @PutMapping
     public void editUser(@RequestBody User user) {
         userRepository.save(user);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userRepository.deleteById(id);
+    }
+
+    @GetMapping("/current")
+    public ResponseEntity<User> getCurrentUser(Principal principal) {
+        return ResponseEntity.ok(userRepository.findByName(principal.getName() ).get() );
     }
 
 }
