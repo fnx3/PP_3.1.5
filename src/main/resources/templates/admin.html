@@ -98,7 +98,7 @@
                         <tbody id="allUsersBody">
 
                             <div class="modal fade"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true" id="editModal">
                                 <div class="modal-dialog" modal-dialog-centered>
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -107,20 +107,21 @@
                                                     aria-label="Close">
                                             </button>
                                         </div>
-                                        <form>
+                                        <form id="editUser">
                                             <div class="modal-body col-md text-center">
-                                                <label for="name1"><b>Name</b></label>
-                                                <input class="form-control" id="name1" required/>
+                                                <label for="editName"><b>Name</b></label>
+                                                <input class="form-control" id="editName" required/>
                                                 <br>
-                                                <label for="age1"><b>Age</b></label>
-                                                <input class="form-control" id="age1" required/>
+                                                <label for="editAge"><b>Age</b></label>
+                                                <input class="form-control" id="editAge" required/>
                                                 <br>
-                                                <label for="password1"><b>Password</b></label>
-                                                <input class="form-control" id="password1"/>
+                                                <label for="editPassword"><b>Password</b></label>
+                                                <input class="form-control" id="editPassword"/>
                                                 <br>
-                                                <label for="roles1"><b>Role</b></label>
-                                                <select multiple class="form-control form-control-sm" id="roles1" name="role" size="2" required>
-
+                                                <label for="rolesEdit"><b>Role</b></label>
+                                                <select multiple class="form-control form-control-sm" id="rolesEdit" name="role" size="2" required>
+                                                    <option id="rolesEdit1" value="1">ADMIN</option>
+                                                    <option id="rolesEdit2" value="2">USER</option>
                                                 </select>
                                                 <br><br>
                                             </div>
@@ -128,7 +129,7 @@
                                                 <button type="submit" class="btn btn-primary">
                                                     Edit
                                                 </button>
-                                                <button type="button" class="btn btn-secondary"
+                                                <button type="button" class="btn btn-secondary" id="closeEditModal"
                                                         data-bs-dismiss="modal">Close
                                                 </button>
                                             </div>

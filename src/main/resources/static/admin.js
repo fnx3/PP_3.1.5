@@ -1,6 +1,7 @@
 let table = []
 let currentUser = '';
-let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal') );
+let editModal = new bootstrap.Modal(document.getElementById('editModal') );
 
 function getAllUsers() {
     fetch('/api/admin')
@@ -125,8 +126,8 @@ function showDeleteModal(id) {
         },
     });
 
-    fetch(request).then(res => res.json()).then(deleteUser => {
-        console.log(deleteUser);
+    fetch(request).then(response => response.json()).then(deleteUser => {
+
         document.getElementById('idDel').setAttribute('value', deleteUser.id);
         document.getElementById('nameDel').setAttribute('value', deleteUser.name);
         document.getElementById('ageDel').setAttribute('value', deleteUser.age);
@@ -134,10 +135,10 @@ function showDeleteModal(id) {
         document.getElementById('passwordDel').setAttribute('value', deleteUser.password);
 
         let roles = deleteUser.roles;
-        if (roles.includes("USER")) {
+        if (roles.includes("USER") ) {
             document.getElementById('rolesDel1').setAttribute('selected', 'true');
         }
-        if (roles.includes("ADMIN")) {
+        if (roles.includes("ADMIN") ) {
             document.getElementById('rolesDel2').setAttribute('selected', 'true');
         }
 
@@ -164,3 +165,67 @@ function showDeleteModal(id) {
         deleteModal.hide();
     });
 }
+
+function showEditModal(id) {
+    document.getElementById('closeEditModal').setAttribute('onclick', () => {
+        document.getElementById('editUser').reset();
+        editModal.hide();
+    })
+
+    let request = new Request("/api/admin/" + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    fetch(request).then(response => response.json() ).then(editUser => {
+
+        // document.getElementById('idEdit').setAttribute('value', editUser.id);
+        document.getElementById('editName').setAttribute('value', editUser.name);
+        document.getElementById('editAge').setAttribute('value', editUser.age);
+
+        document.getElementById('editPassword').setAttribute('value', editUser.password);
+
+        let roles = editUser.roles;
+        if (roles.includes("USER") ) {
+            document.getElementById('rolesEdit1').setAttribute('selected', 'true');
+        }
+        if (roles.includes("ADMIN") ) {
+            document.getElementById('rolesEdit2').setAttribute('selected', 'true');
+        }
+
+        editModal.show();
+    });
+
+    document.getElementById('editUser').addEventListener('submit', editUser);
+
+    function editUser(form) {
+        form.preventDefault();
+
+        let editUser = new FormData(form.target);
+        let user = {
+            id: id,
+            name: editUser.get('editName'),
+            age: editUser.get('editAge'),
+            roles: roleUsers('#rolesEdit'),
+            password: editUser.get('editPassword')
+        };
+
+        fetch('api/admin', {
+            method: 'PUT',
+            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then( () => {
+                editModal.hide();
+            })
+
+    }
+}
+
+
+
+
