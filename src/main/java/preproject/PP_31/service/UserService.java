@@ -1,10 +1,8 @@
 package preproject.PP_31.service;
 
-import preproject.PP_31.model.Role;
 import preproject.PP_31.model.User;
 
 import java.util.List;
-import java.util.Set;
 
 public interface UserService {
 
@@ -18,5 +16,4 @@ public interface UserService {
 
     void delete(Long id);
 
-    List<Role> listRoles();
 }

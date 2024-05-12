@@ -6,7 +6,7 @@ import preproject.PP_31.model.User;
 
 import java.util.Collection;
 
-public record UserDetailsImpl(User user) implements UserDetails {
+public record UserDetailsImp(User user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

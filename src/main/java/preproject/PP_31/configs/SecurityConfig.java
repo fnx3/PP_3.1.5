@@ -6,19 +6,19 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import preproject.PP_31.handlers.UserLoginSuccessHandler;
-import preproject.PP_31.service.UserDetailsServiceImpl;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsServiceImpl userDetailsService;
-    private final UserLoginSuccessHandler handler;
+    private final UserDetailsService userDetailsService;
+    private final AuthenticationSuccessHandler handler;
 
     @Autowired
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService, UserLoginSuccessHandler handler) {
+    public SecurityConfig(UserDetailsService userDetailsService, AuthenticationSuccessHandler handler) {
         this.userDetailsService = userDetailsService;
         this.handler = handler;
     }
@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasRole("USER")
+                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -44,12 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Настройка аутентификации пользователя
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder() );
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
 }

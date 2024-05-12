@@ -1,6 +1,6 @@
 let currentUser = "";
 
-fetch("/api/user/current")
+fetch("/api/admin/current")
     .then(response => response.json() )
     .then(data => {
         currentUser = data
