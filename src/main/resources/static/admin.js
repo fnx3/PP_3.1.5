@@ -76,7 +76,7 @@ function roleUsers(event) {
         if (select.options[i].selected) {
             roles.push({
                 id: select.options[i].value,
-                name: select.options[i].value === '2' ? 'ROLE_ADMIN' : 'ROLE_USER'
+                name: select.options[i].value === '1' ? 'ROLE_USER' : 'ROLE_ADMIN'
             })
         }
     }
@@ -181,10 +181,9 @@ function showEditModal(id) {
 
     fetch(request).then(response => response.json() ).then(editUser => {
 
-        // document.getElementById('idEdit').setAttribute('value', editUser.id);
+        document.getElementById('editId').setAttribute('value', editUser.id);
         document.getElementById('editName').setAttribute('value', editUser.name);
         document.getElementById('editAge').setAttribute('value', editUser.age);
-
         document.getElementById('editPassword').setAttribute('value', editUser.password);
 
         let roles = editUser.roles;
@@ -198,34 +197,35 @@ function showEditModal(id) {
         editModal.show();
     });
 
-    document.getElementById('editUser').addEventListener('submit', editUser);
+    document.getElementById('editUser').addEventListener('submit', editUser );
 
-    function editUser(form) {
-        form.preventDefault();
-
-        let editUser = new FormData(form.target);
-        let user = {
-            id: id,
-            name: editUser.get('editName'),
-            age: editUser.get('editAge'),
-            roles: roleUsers('#rolesEdit'),
-            password: editUser.get('editPassword')
-        };
-
-        fetch('api/admin', {
-            method: 'PUT',
-            body: JSON.stringify(user),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then( () => {
-                editModal.hide();
-            })
-
-    }
 }
 
+function editUser(event) {
+    event.preventDefault();
 
+    let editUser = new FormData(event.target);
+    let user = {
+        id: editUser.get('id'),
+        name: editUser.get('name'),
+        age: editUser.get('age'),
+        roles: roleUsers('#editRoles'),
+        password: editUser.get('password')
+    };
+
+    fetch('api/admin', {
+        method: 'PUT',
+        body: JSON.stringify(user),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then( () => {
+            event.target.reset();
+            getAllUsers();
+            editModal.hide();
+        })
+
+}
 
 
