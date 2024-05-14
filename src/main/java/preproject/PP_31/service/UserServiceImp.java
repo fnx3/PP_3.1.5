@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import preproject.PP_31.model.User;
 import preproject.PP_31.repositories.UserRepository;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -29,6 +30,11 @@ public class UserServiceImp implements UserService {
     @Transactional(readOnly = true)
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public User getCurrentUser(Principal principal) {
+        return userRepository.findByName(principal.getName() ).get();
     }
 
     public void add(User user) {

@@ -206,8 +206,8 @@
                             <br>
                             <label for="roles"><b>Role</b></label>
                             <select multiple class="form-control form-control-sm" id="roles" name="roles" size="2" required>
-                                <option  th:value="${roleUser.authority}">USER</option>
-                                <option  th:value="${roleAdmin.authority}">ADMIN</option>
+                                <option value="ROLE_USER">USER</option>
+                                <option value="ROLE_ADMIN">ADMIN</option>
                             </select>
                             <br>
                             <button type="submit" class="btn btn-success" value="Add new user" id="addNewUser">

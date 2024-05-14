@@ -7,12 +7,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import preproject.PP_31.model.User;
 import preproject.PP_31.repositories.UserRepository;
-import preproject.PP_31.security.UserDetailsImp;
 
 import java.util.Optional;
 
 @Service
-public class UserDetailsServiceImp implements UserDetailsService{
+public class UserDetailsServiceImp implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -29,6 +28,7 @@ public class UserDetailsServiceImp implements UserDetailsService{
             throw new UsernameNotFoundException("User not found");
         }
 
-        return new UserDetailsImp(user.get() );
+        return user.get();
     }
+
 }

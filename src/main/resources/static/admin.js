@@ -80,7 +80,7 @@ function newUser(form) {
         name: newUser.get('name'),
         age: newUser.get('age'),
         password: newUser.get('password'),
-        roles: newUser.getAll('roles'),
+        roles: //
     };
 
     fetch('api/admin', {

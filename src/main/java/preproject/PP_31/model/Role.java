@@ -18,19 +18,6 @@ public class Role implements GrantedAuthority {
     public Role() {
     }
 
-    public Role(String name) {
-        switch (name) {
-            case "ROLE_USER" -> {
-                this.name = name;
-                this.id = 1L;
-            }
-            case "ROLE_ADMIN" -> {
-                this.name = name;
-                this.id = 2L;
-            }
-        }
-    }
-
     public Role(Long id, String name) {
         this.id = id;
         this.name = name;

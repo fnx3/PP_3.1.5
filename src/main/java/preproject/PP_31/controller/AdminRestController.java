@@ -3,24 +3,26 @@ package preproject.PP_31.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import preproject.PP_31.model.Role;
 import preproject.PP_31.model.User;
-import preproject.PP_31.repositories.UserRepository;
+import preproject.PP_31.service.RoleService;
 import preproject.PP_31.service.UserService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/admin")
 public class AdminRestController {
 
-    UserService userService;
-    UserRepository userRepository;
+    private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public AdminRestController(UserService userService, UserRepository userRepository) {
+    public AdminRestController(UserService userService, RoleService roleService) {
         this.userService = userService;
-        this.userRepository = userRepository;
+        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -34,12 +36,14 @@ public class AdminRestController {
     }
 
     @PostMapping
-    public void newUser (@RequestBody User user) {
+    public void newUser (@RequestBody User user, @RequestBody Set<Role> roles) {
+        user.setRoles(roles);
         userService.add(user);
     }
 
     @PutMapping
-    public void editUser(@RequestBody User user) {
+    public void editUser(@RequestBody User user, @RequestBody Set<Role> roles) {
+        user.setRoles(roles);
         userService.update(user, user.getId() );
     }
 
@@ -50,7 +54,7 @@ public class AdminRestController {
 
     @GetMapping("/current")
     public ResponseEntity<User> getCurrentUser(Principal principal) {
-        return ResponseEntity.ok(userRepository.findByName(principal.getName() ).get() );
+        return ResponseEntity.ok(userService.getCurrentUser(principal) );
     }
 
 }
