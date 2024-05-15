@@ -30,6 +30,11 @@ public class AdminRestController {
         return ResponseEntity.ok(userService.getAll() );
     }
 
+    @GetMapping("/roles")
+    public ResponseEntity<List<Role> > roles() {
+        return ResponseEntity.ok(roleService.listRoles() );
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<User> showUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.get(id) );
@@ -41,8 +46,7 @@ public class AdminRestController {
     }
 
     @PutMapping
-    public void editUser(@RequestBody User user, @RequestBody Set<Role> roles) {
-        user.setRoles(roles);
+    public void editUser(@RequestBody User user) {
         userService.update(user, user.getId() );
     }
 

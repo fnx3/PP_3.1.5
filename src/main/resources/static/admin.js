@@ -69,33 +69,42 @@ function showUser(user) {
     `;
 }
 
+fetch("api/admin/roles").then(response => response.json())
+    .then(roles => {
+        let rolesSelect = document.getElementById("roles");
+
+        roles.forEach(role => {
+            let option = document.createElement("option");
+            option.value = role.id;
+            option.text = role.name;
+
+            rolesSelect.appendChild(option);
+        });
+    });
+
 document.getElementById('newUser').addEventListener('submit', newUser);
 
 function newUser(form) {
     form.preventDefault();
 
     let newUser = new FormData(form.target);
+
+    const selectedRoles = [];
+    const selectElement = document.getElementById('roles');
+
+    for (let i = 0; i < selectElement.options.length; i++) {
+        if (selectElement.options[i].selected) {
+            selectedRoles.push( { id : selectElement.options[i].value, name : "ROLE_" + selectElement.options[i].text} );
+        }
+    }
+
     let user = {
         id: null,
         name: newUser.get('name'),
         age: newUser.get('age'),
         password: newUser.get('password'),
-        roles: []
+        roles: selectedRoles
     };
-
-    // Получение выбранных ролей
-    let selectedRoles = newUser.getAll('roles');
-    const options = document.getElementById('roles').getElementsByTagName('option');
-    selectedRoles.forEach(role => {
-        let name = '';
-        for (let i = 0; i < options.length; i++) {
-            if (options[i].value === role) {
-                name = options[i].getAttribute('name');
-                break;
-            }
-        }
-        user.roles.push({ id: role, name: name });
-    });
 
     fetch('api/admin', {
         method: 'POST',
@@ -186,13 +195,18 @@ function showEditModal(id) {
         document.getElementById('editAge').setAttribute('value', editUser.age);
         document.getElementById('editPassword').setAttribute('value', editUser.password);
 
-        let roles = editUser.roles;
-        if (roles.includes("USER") ) {
-            document.getElementById('rolesEdit1').setAttribute('selected', 'true');
-        }
-        if (roles.includes("ADMIN") ) {
-            document.getElementById('rolesEdit2').setAttribute('selected', 'true');
-        }
+        fetch("api/admin/roles").then(response => response.json())
+            .then(roles => {
+                let rolesSelect = document.getElementById("editRoles");
+
+                roles.forEach(role => {
+                    let option = document.createElement("option");
+                    option.value = role.id;
+                    option.text = role.name;
+
+                    rolesSelect.appendChild(option);
+                });
+            });
 
         editModal.show();
     });
@@ -205,12 +219,22 @@ function editUser(event) {
     event.preventDefault();
 
     let editUser = new FormData(event.target);
+
+    const selectedRoles = [];
+    const selectElement = document.getElementById('editRoles');
+
+    for (let i = 0; i < selectElement.options.length; i++) {
+        if (selectElement.options[i].selected) {
+            selectedRoles.push( { id : selectElement.options[i].value, name : "ROLE_" + selectElement.options[i].text} );
+        }
+    }
+
     let user = {
         id: editUser.get('id'),
         name: editUser.get('name'),
         age: editUser.get('age'),
-        roles: editUser.getAll('editRoles'),
-        password: editUser.get('password')
+        password: editUser.get('password'),
+        roles: selectedRoles
     };
 
     fetch('api/admin', {
