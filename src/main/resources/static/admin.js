@@ -80,8 +80,22 @@ function newUser(form) {
         name: newUser.get('name'),
         age: newUser.get('age'),
         password: newUser.get('password'),
-        roles: //
+        roles: []
     };
+
+    // Получение выбранных ролей
+    let selectedRoles = newUser.getAll('roles');
+    const options = document.getElementById('roles').getElementsByTagName('option');
+    selectedRoles.forEach(role => {
+        let name = '';
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === role) {
+                name = options[i].getAttribute('name');
+                break;
+            }
+        }
+        user.roles.push({ id: role, name: name });
+    });
 
     fetch('api/admin', {
         method: 'POST',

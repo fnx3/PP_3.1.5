@@ -36,8 +36,7 @@ public class AdminRestController {
     }
 
     @PostMapping
-    public void newUser (@RequestBody User user, @RequestBody Set<Role> roles) {
-        user.setRoles(roles);
+    public void newUser (@RequestBody User user) {
         userService.add(user);
     }
 
