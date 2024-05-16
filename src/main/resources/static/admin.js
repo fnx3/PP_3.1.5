@@ -72,13 +72,17 @@ function showUser(user) {
 fetch("api/admin/roles").then(response => response.json())
     .then(roles => {
         let rolesSelect = document.getElementById("roles");
+        let rolesSelectEdit = document.getElementById("editRoles");
 
         roles.forEach(role => {
             let option = document.createElement("option");
             option.value = role.id;
             option.text = role.name;
 
+            let optionCopy = option.cloneNode(true); // создаем копию option
+
             rolesSelect.appendChild(option);
+            rolesSelectEdit.appendChild(optionCopy);
         });
     });
 
@@ -194,23 +198,9 @@ function showEditModal(id) {
         document.getElementById('editName').setAttribute('value', editUser.name);
         document.getElementById('editAge').setAttribute('value', editUser.age);
         document.getElementById('editPassword').setAttribute('value', editUser.password);
-
-        fetch("api/admin/roles").then(response => response.json())
-            .then(roles => {
-                let rolesSelect = document.getElementById("editRoles");
-
-                roles.forEach(role => {
-                    let option = document.createElement("option");
-                    option.value = role.id;
-                    option.text = role.name;
-
-                    rolesSelect.appendChild(option);
-                });
-            });
-
-        editModal.show();
     });
 
+        editModal.show();
     document.getElementById('editUser').addEventListener('submit', editUser );
 
 }
